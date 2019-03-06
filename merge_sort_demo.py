@@ -30,5 +30,6 @@ def mergeSort(L, compare=lambda x, y: x < y):
         return merge(left, right, compare)
 
 
+
 L = [4, 3, 7, 2, 4, 3, 9, 1, 7]
 print(mergeSort(L))
