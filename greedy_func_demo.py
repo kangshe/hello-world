@@ -102,14 +102,14 @@ def genPowerset(L):
 
 
 # add：0/1背包问题最优解之“暴力解决法（穷举）”
-def chooseBest(pset, maxWeight):
+def chooseBest(pset, maxWeight, getV, getW):
     bestSet, bestVal = None, 0.0
     for items in pset:
         itemsVal = 0.0
         itemsWeight = 0.0
         for item in items:
-            itemsVal += item.getValue()
-            itemsWeight += item.getWeight()
+            itemsVal += getV(item)
+            itemsWeight += getW(item)
         if itemsWeight <= maxWeight and itemsVal > bestVal:
             bestVal = itemsVal
             bestSet = items
@@ -119,7 +119,7 @@ def chooseBest(pset, maxWeight):
 def testBest(maxWeight=20):
     items = buildItems()
     pset = genPowerset(items)
-    taken, val = chooseBest(pset, maxWeight)
+    taken, val = chooseBest(pset, maxWeight, Item.getValue, Item.getWeight)
     print('Total value of items taken is', val)
     for item in taken:
         print(item)
