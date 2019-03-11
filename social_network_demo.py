@@ -11,6 +11,7 @@ def printPath(path):
     return result
 
 
+# 最短路径的深度优先搜索算法
 def DFS(graph, start, end, path, shortest, toPoint=False):
     """假设 graph是无向图；
             start和end是节点；
@@ -18,7 +19,7 @@ def DFS(graph, start, end, path, shortest, toPoint=False):
        返回graph中从start到end的最短路径 """
     path = path + [start]
     if toPoint:
-        print('Curren DFS path:', printPath(path))
+        print('Current DFS path:', printPath(path))
     if start == end:
         return path
     for node in graph.childenOf(start):
@@ -28,6 +29,25 @@ def DFS(graph, start, end, path, shortest, toPoint=False):
                 if newPath != None:
                     shortest = newPath
     return shortest
+
+
+# 最短路径的广度优先搜索算法
+def BFS(graph, start, end, toPoint=False):
+    """假设graph是无向图；start和end是节点
+       返回graph中从start到end的最短路径"""
+    initPath = [start]
+    pathQueue = [initPath]
+    while len(pathQueue) != 0:
+        tmpPath = pathQueue.pop(0)
+        print('Current BFS path:', printPath(tmpPath))
+        lastNode = tmpPath[-1]
+        if lastNode == end:
+            return tmpPath
+        for nextNode in graph.childenOf(lastNode):
+            if nextNode not in tmpPath:
+                newPath = tmpPath + [nextNode]
+                pathQueue.append(newPath)
+    return None
 
 
 def shortestPath(graph, start, end, toPoint=False):
@@ -53,8 +73,10 @@ def testDFS():
     g.addEdge(Edge(nodes[1], nodes[0]))
     g.addEdge(Edge(nodes[3], nodes[1]))
     g.addEdge(Edge(nodes[4], nodes[0]))
-    sp = shortestPath(g, nodes[0], nodes[5], toPoint=True)
-    print('Shortest path is:', printPath(sp))
+    sp1 = shortestPath(g, nodes[0], nodes[5], toPoint=True)
+    print('Shortest path found by DFS:', printPath(sp1))
+    sp2 = BFS(g, nodes[0], nodes[5])
+    print('Shortest path found by BFS:', printPath(sp2))
 
 
 testDFS()
