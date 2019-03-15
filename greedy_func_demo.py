@@ -123,6 +123,3 @@ def testBest(maxWeight=20):
     print('Total value of items taken is', val)
     for item in taken:
         print(item)
-
-
-testBest()
